@@ -1,3 +1,5 @@
+from typing import Dict, List
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -31,8 +33,10 @@ def read(member_id: int) -> Member:
 
 
 @app.get("/members")
-def read() -> list[Member]:
-    return find_all()
+def read() -> dict[str, list[Member]]:
+    response: dict[str, list[Member]] = dict()
+    response["data"] = find_all()
+    return response
 
 
 @app.put("/members/{member_id}")
